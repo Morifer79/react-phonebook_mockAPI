@@ -1,27 +1,50 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { delContact, showContacts } from 'redux/globalSlice';
+import { deleteContact, fetchAllContacts } from 'redux/operations';
+import { useEffect } from 'react';
 import { nanoid } from 'nanoid';
+import { Loader } from 'components/Loader/Loader';
 import {
   ContactsList,
   ContactsListItem,
   ButtonDel,
 } from './ContactList.styled';
+import {
+  selectContacts,
+  selectError,
+  selectFilteredContacts,
+  selectIsLoading,
+} from 'redux/selectors';
 
 export const ContactList = () => {
-  const filterContacts = useSelector(showContacts);
+  const contacts = useSelector(selectContacts);
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
-  const removeContact = name => dispatch(delContact(name));
+  const filterContacts = useSelector(selectFilteredContacts);
+
+  useEffect(() => {
+    dispatch(fetchAllContacts());
+  }, [dispatch]);
 
   return (
-    <ContactsList>
-      {filterContacts.map(({ name, number }) => (
-        <ContactsListItem key={nanoid()}>
-          {name}: {number}
-          <ButtonDel type="button" onClick={() => removeContact(name)}>
-            Delete
-          </ButtonDel>
-        </ContactsListItem>
-      ))}
-    </ContactsList>
+    <>
+      {isLoading && <Loader />}
+      {error && <p>{error}</p>}
+      {contacts && (
+        <ContactsList>
+          {filterContacts.map(({ id, name, number }) => (
+            <ContactsListItem key={nanoid()}>
+              {name}: {number}
+              <ButtonDel
+                type="button"
+                onClick={() => dispatch(deleteContact(id))}
+              >
+                Delete
+              </ButtonDel>
+            </ContactsListItem>
+          ))}
+        </ContactsList>
+      )}
+    </>
   );
 };

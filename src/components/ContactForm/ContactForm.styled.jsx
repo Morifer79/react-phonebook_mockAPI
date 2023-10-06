@@ -77,5 +77,5 @@ export const ButtonAdd = styled.button`
 
 export const ErrMsg = styled(ErrorMessage)`
   color: ${p => p.theme.colors.yellow};
-  font-size: 16px;
+  font-size: 14px;
 `;

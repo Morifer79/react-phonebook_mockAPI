@@ -1,16 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { applyFilter, getFilters } from 'redux/globalSlice';
+import { useDispatch } from 'react-redux';
 import { Label } from 'components/ContactForm/ContactForm.styled';
 import { SearchInput, SearchWrapper } from './Filter.styled';
+import { applyFilter } from 'redux/filterSlice';
 import { nanoid } from 'nanoid';
 
 export const Filter = () => {
-  const filter = useSelector(getFilters);
   const dispatch = useDispatch();
-
-  const changedFilter = e => {
-    dispatch(applyFilter(e.target.value));
-  };
 
   return (
     <SearchWrapper>
@@ -18,9 +13,8 @@ export const Filter = () => {
         Find contacts by name:
         <SearchInput
           type="text"
-          value={filter}
-          onChange={changedFilter}
           id={nanoid()}
+          onChange={e => dispatch(applyFilter(e.target.value))}
         />
       </Label>
     </SearchWrapper>

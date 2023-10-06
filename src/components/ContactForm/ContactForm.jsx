@@ -1,3 +1,8 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { selectContacts } from 'redux/selectors';
+import { addNewContact } from 'redux/operations';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 import {
   ButtonAdd,
   ErrMsg,
@@ -6,11 +11,6 @@ import {
   InputStyled,
   Label,
 } from 'components/ContactForm/ContactForm.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { addNewContact, getContacts } from 'redux/globalSlice';
-import { nanoid } from 'nanoid';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -19,20 +19,20 @@ const SignupSchema = Yup.object().shape({
     .required('The field cannot be left empty!')
     .matches(
       /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
-      'Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore Artagnan'
+      'Name may contain only letters, apostrophe, dash and spaces.'
     ),
   number: Yup.string()
-    .min(9, 'enter the number in the format XXX-XX-XX')
-    .max(9, 'enter the number in the format XXX-XX-XX')
+    .min(12, 'enter the number in the format XXX-XXX-XXXX')
+    .max(12, 'enter the number in the format XXX-XXX-XXXX')
     .required('The field cannot be left empty!')
     .matches(
       /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/,
-      'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
+      'Phone number must be digits and dashes.'
     ),
 });
 
 export const ContactForm = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleSubmit = (person, { resetForm }) => {
@@ -52,8 +52,7 @@ export const ContactForm = () => {
       return;
     }
 
-    const completeContact = { ...person, id: nanoid() };
-    dispatch(addNewContact(completeContact));
+    dispatch(addNewContact(person));
     resetForm();
   };
 

@@ -16,7 +16,7 @@ export const ContactsListItem = styled.li`
   width: 100%;
   display: inline-flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   pointer-events: none;
   transition: color ${p => p.theme.transition};
 
