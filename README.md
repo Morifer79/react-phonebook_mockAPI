@@ -1,7 +1,7 @@
 # ℝ𝕖𝕒𝕔𝕥 ℙ𝕙𝕠𝕟𝕖𝕓𝕠𝕠𝕜 𝔸ℙ𝕀  
 ## 𝔼𝕝𝕖𝕧𝕖𝕟𝕥𝕙 𝕣𝕖𝕒𝕔𝕥 𝕙𝕠𝕞𝕖𝕨𝕠𝕣𝕜  
 
-![React Phonebook API](./src/car-rental-home.jpg)  
+![React Phonebook API](./src/preview-phonebook.jpg)  
 
 This project was created using [Create React App](https://github.com/facebook/create-react-app).  
 
